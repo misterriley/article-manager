@@ -20,7 +20,7 @@ public class SimpleDBIO
 {
 	private static final String DELIMITER = "\uE000";
 
-	public static void addColumnToDB(SimpleDB p_db, String p_columnName, String p_defaultValue)
+	public static void addColumnToDB(final SimpleDB p_db, final String p_columnName, final String p_defaultValue)
 	{
 		p_db.addHeaderElement(p_columnName);
 
@@ -31,9 +31,10 @@ public class SimpleDBIO
 	}
 
 	/**
-	 * @param p_file
-	 * @param p_hasHeader
-	 * @return A SimpleDB object constructed from this file
+	 * @param  p_file
+	 * @param  p_hasHeader
+	 *
+	 * @return             A SimpleDB object constructed from this file
 	 */
 	public static SimpleDB loadFromFile(final File p_file, final boolean p_hasHeader)
 	{
@@ -43,8 +44,9 @@ public class SimpleDBIO
 
 		if (p_file != null && p_file.exists())
 		{
-			try (BufferedReader reader = new BufferedReader(
-					new InputStreamReader(new FileInputStream(p_file), "UNICODE")))
+			try (
+				BufferedReader reader =
+					new BufferedReader(new InputStreamReader(new FileInputStream(p_file), "UNICODE")))
 			{
 				boolean first = true;
 				while (true)
@@ -89,7 +91,7 @@ public class SimpleDBIO
 		return new SimpleDB(db, columnMap, header);
 	}
 
-	public static void main(String[] p_args)
+	public static void main(final String[] p_args)
 	{
 
 	}
@@ -112,8 +114,9 @@ public class SimpleDBIO
 			}
 		}
 
-		try (final BufferedWriter writer = new BufferedWriter(
-				new OutputStreamWriter(new FileOutputStream(p_file), "Unicode")))
+		try (
+			final BufferedWriter writer =
+				new BufferedWriter(new OutputStreamWriter(new FileOutputStream(p_file), "Unicode")))
 		{
 			final int numColumns = p_db.numColumns();
 			final int numRows = p_db.numRows();

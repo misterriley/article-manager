@@ -11,7 +11,12 @@ public class ArticleData
 	private int		m_numComparisons;
 	private String	m_abstract;
 
-	public ArticleData(String p_title, File p_file, double p_rating, int p_numComparisons, String p_abstract)
+	public ArticleData(
+		final String p_title,
+		final File p_file,
+		final double p_rating,
+		final int p_numComparisons,
+		final String p_abstract)
 	{
 		setTitle(p_title);
 		try
@@ -57,18 +62,18 @@ public class ArticleData
 		m_numComparisons++;
 	}
 
-	private void setAbstract(String p_abstract)
-	{
-		m_abstract = p_abstract;
-	}
-
-	public void setRating(double p_rating)
+	public void setRating(final double p_rating)
 	{
 		m_rating = p_rating;
 	}
 
-	public void setTitle(String p_title)
+	public void setTitle(final String p_title)
 	{
 		m_title = p_title;
+	}
+
+	private void setAbstract(final String p_abstract)
+	{
+		m_abstract = p_abstract;
 	}
 }

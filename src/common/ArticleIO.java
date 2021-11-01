@@ -8,12 +8,6 @@ import java.util.TreeMap;
 public class ArticleIO
 {
 
-	private static File getArticlesFile()
-	{
-		final String fileLoc = Constants.SAVE_DIR;
-		return new File(fileLoc, Constants.ARTICLE_SAVE_FILE);
-	}
-
 	public static TreeMap<String, ArticleData> loadArticlesFromFile()
 	{
 		final TreeMap<String, ArticleData> ret = new TreeMap<>();
@@ -27,15 +21,15 @@ public class ArticleIO
 			final int numComparisons = simpleDB.get(i, Constants.NUM_COMPARISONS_COLUMN_NAME).asInt();
 			final String articleAbstract = simpleDB.get(i, Constants.ARTICLE_ABSTRACT_COLUMN_NAME).asString();
 
-			final ArticleData article = new ArticleData(articleTitle, new File(articleFilePath), rating, numComparisons,
-					articleAbstract);
+			final ArticleData article =
+				new ArticleData(articleTitle, new File(articleFilePath), rating, numComparisons, articleAbstract);
 			ret.put(articleFilePath, article);
 		}
 
 		return ret;
 	}
 
-	public static void main(String[] p_args)
+	public static void main(final String[] p_args)
 	{
 		final SimpleDB db = SimpleDBIO.loadFromFile(getArticlesFile(), true);
 		SimpleDBIO.addColumnToDB(db, Constants.ARTICLE_ABSTRACT_COLUMN_NAME, Constants.NO_NAME_YET);
@@ -78,7 +72,7 @@ public class ArticleIO
 		SimpleDBIO.saveToFile(toSave, getArticlesFile());
 	}
 
-	public static TreeMap<String, ArticleData> scrapeArticles(File p_parent, boolean p_recursive)
+	public static TreeMap<String, ArticleData> scrapeArticles(final File p_parent, final boolean p_recursive)
 	{
 		final TreeMap<String, ArticleData> ret = new TreeMap<>();
 
@@ -87,7 +81,16 @@ public class ArticleIO
 		return ret;
 	}
 
-	private static void scrapeArticlesPrivate(File p_parent, boolean p_recursive, TreeMap<String, ArticleData> p_ret)
+	private static File getArticlesFile()
+	{
+		final String fileLoc = Constants.SAVE_DIR;
+		return new File(fileLoc, Constants.ARTICLE_SAVE_FILE);
+	}
+
+	private static void scrapeArticlesPrivate(
+		final File p_parent,
+		final boolean p_recursive,
+		final TreeMap<String, ArticleData> p_ret)
 	{
 		final File[] files = p_parent.listFiles();
 
@@ -106,8 +109,12 @@ public class ArticleIO
 				{
 					if (!p_ret.containsKey(file.getCanonicalPath()))
 					{
-						final ArticleData newArticle = new ArticleData(Constants.NO_NAME_YET, file,
-								Constants.DEFAULT_ELO_RATING, 0, Constants.NO_NAME_YET);
+						final ArticleData newArticle = new ArticleData(
+							Constants.NO_NAME_YET,
+							file,
+							Constants.DEFAULT_ELO_RATING,
+							0,
+							Constants.NO_NAME_YET);
 						p_ret.put(file.getCanonicalPath(), newArticle);
 					}
 					else

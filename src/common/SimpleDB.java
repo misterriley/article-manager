@@ -32,8 +32,10 @@ public class SimpleDB
 	 * @param p_columnMap
 	 * @param p_header
 	 */
-	public SimpleDB(final ArrayList<ArrayList<SimpleDBCell>> p_db, final TreeMap<String, Integer> p_columnMap,
-			final ArrayList<String> p_header)
+	public SimpleDB(
+		final ArrayList<ArrayList<SimpleDBCell>> p_db,
+		final TreeMap<String, Integer> p_columnMap,
+		final ArrayList<String> p_header)
 	{
 		m_db = p_db;
 		m_columnMap = p_columnMap;
@@ -63,9 +65,10 @@ public class SimpleDB
 	}
 
 	/**
-	 * @param p_rowIndex
-	 * @param p_columnIndex
-	 * @return String that is the contents of this cell
+	 * @param  p_rowIndex
+	 * @param  p_columnIndex
+	 *
+	 * @return               String that is the contents of this cell
 	 */
 	public SimpleDBCell get(final int p_rowIndex, final int p_columnIndex)
 	{
@@ -74,9 +77,10 @@ public class SimpleDB
 	}
 
 	/**
-	 * @param p_rowIndex
-	 * @param p_column
-	 * @return String that is the contents of this cell
+	 * @param  p_rowIndex
+	 * @param  p_column
+	 *
+	 * @return            String that is the contents of this cell
 	 */
 	public SimpleDBCell get(final int p_rowIndex, final String p_column)
 	{
@@ -85,8 +89,9 @@ public class SimpleDB
 	}
 
 	/**
-	 * @param p_index
-	 * @return The name of the column at the specified column index
+	 * @param  p_index
+	 *
+	 * @return         The name of the column at the specified column index
 	 */
 	public String getColumnName(final int p_index)
 	{
@@ -108,8 +113,8 @@ public class SimpleDB
 
 	/**
 	 * @return The number of columns. First checks the size of the header, then
-	 *         checks the size of the first row. If both of these are null, returns
-	 *         0.
+	 *             checks the size of the first row. If both of these are null,
+	 *             returns 0.
 	 */
 	public int numColumns()
 	{
@@ -160,8 +165,8 @@ public class SimpleDB
 	}
 
 	/**
-	 * Sets the value at this location and ensures the db has capacity to hold an
-	 * element at that location
+	 * Sets the value at this location and ensures the db has capacity to hold
+	 * an element at that location
 	 *
 	 * @param p_rowIndex
 	 * @param p_column

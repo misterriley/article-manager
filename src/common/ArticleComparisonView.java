@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 public class ArticleComparisonView extends JOptionPane
 {
@@ -24,7 +25,7 @@ public class ArticleComparisonView extends JOptionPane
 		private final ArticleData	m_article;
 		private final JTextField	m_textField;
 
-		public ArticlePanel(ArticleData p_article, ArticleComparisonView p_parent)
+		public ArticlePanel(final ArticleData p_article, final ArticleComparisonView p_parent)
 		{
 			m_article = p_article;
 			setLayout(new GridLayout(1, 4));
@@ -38,7 +39,7 @@ public class ArticleComparisonView extends JOptionPane
 
 			final JButton openFileButton = new JButton("Open file");
 			openFileButton
-					.addActionListener(p_e -> AMMainController.openFileWithDefaultProgram(p_article.getFileName()));
+				.addActionListener(p_e -> AMMainController.openFileWithDefaultProgram(p_article.getFileName()));
 
 			final JButton selectButton = new JButton("I select this one");
 			selectButton.addActionListener(p_e -> p_parent.setValue(p_article));
@@ -74,13 +75,33 @@ public class ArticleComparisonView extends JOptionPane
 	 */
 	private static final long serialVersionUID = -3511960440606047358L;
 
-	private static ArticleComparisonView buildAndShowArticleComparisonView(JFrame p_frame, EloComparison p_comparison)
+	public static ArticleData getChoice(final JFrame p_frame, final EloComparison p_comparison)
+	{
+		final ArticleComparisonView optionPane = buildAndShowArticleComparisonView(p_frame, p_comparison);
+
+		final Object ret = optionPane.getValue();
+		if (ret instanceof ArticleData)
+		{
+			return (ArticleData) ret;
+		}
+
+		return null;
+	}
+
+	public static void main(final String[] p_args)
+	{
+		buildAndShowArticleComparisonView(null, null);
+	}
+
+	private static ArticleComparisonView buildAndShowArticleComparisonView(
+		final JFrame p_frame,
+		final EloComparison p_comparison)
 	{
 		final ArticleComparisonView optionPane = new ArticleComparisonView(p_comparison);
 
 		final JDialog dialog = new JDialog(p_frame, "Select article", true);
 		dialog.setContentPane(optionPane);
-		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		optionPane.addPropertyChangeListener(e ->
 		{
 			final String prop = e.getPropertyName();
@@ -98,28 +119,10 @@ public class ArticleComparisonView extends JOptionPane
 		return optionPane;
 	}
 
-	public static ArticleData getChoice(JFrame p_frame, EloComparison p_comparison)
-	{
-		final ArticleComparisonView optionPane = buildAndShowArticleComparisonView(p_frame, p_comparison);
-
-		final Object ret = optionPane.getValue();
-		if (ret instanceof ArticleData)
-		{
-			return (ArticleData)ret;
-		}
-
-		return null;
-	}
-
-	public static void main(String[] p_args)
-	{
-		buildAndShowArticleComparisonView(null, null);
-	}
-
 	private ArticlePanel	m_northPanel;
 	private ArticlePanel	m_southPanel;
 
-	public ArticleComparisonView(EloComparison p_comparison)
+	public ArticleComparisonView(final EloComparison p_comparison)
 	{
 		super("Which article to read?");
 
